@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}New Quiz - QuizApp{% endblock %}
+
+
+{% block body %}
+
+<script>
+let currentDiv = "0"
+let correct = 0
+let total = 0
+let corrects = []
+{% for i in range(quiz.cards|length) %}
+    corrects.push("{{quiz.cards[i].correct}}")
+{% endfor %}
+console.log(corrects)
+
+function lastCard() {
+
+  let oldDiv = document.getElementById(currentDiv);
+  if (oldDiv) {oldDiv.style.display = "none";}
+
+
+  currentDiv = (parseInt(currentDiv) - 1).toString();
+  let card = document.getElementById(currentDiv);
+  card.style.display = "block";
+
+  checkNextLast()
+}
+
+function nextCard() {
+
+  let oldDiv = document.getElementById(currentDiv);
+  oldDiv.style.display = "none";
+
+  currentDiv = (parseInt(currentDiv) + 1).toString();
+
+  let card = document.getElementById(currentDiv);
+  card.style.display = "block";
+
+  checkNextLast()
+}
+
+function checkNextLast() {
+  console.log("executed")
+
+  // Buttons
+  let btn_next = document.getElementById("next_btn");
+  let btn_last = document.getElementById("last_btn");
+  let btn_submit = document.getElementById("submit_btn");
+
+  if (document.getElementById((parseInt(currentDiv) + 1).toString())) {
+    btn_next.style.display="block"
+    btn_submit.style.display="none"
+  } else {
+      btn_next.style.display="none"
+      btn_submit.style.display="block"
+    }
+  if (document.getElementById((parseInt(currentDiv) - 1).toString())) {
+    btn_last.style.display="block"
+  } else {
+      btn_last.style.display="none"
+    }
+}
+
+function option_chosen(choose) {
+  if (corrects[parseInt(currentDiv)] == choose) {correct ++; total ++;}
+  console.log(correct)
+  if (document.getElementById((parseInt(currentDiv) + 1).toString())) {
+    nextCard()} else {
+        document.getElementById(currentDiv).style.display = "none";
+        currentDiv = (parseInt(currentDiv) + 1).toString();}
+}
+</script>
+<button onclick="lastCard()" id="last_btn">Last</button>
+<button onclick="nextCard()" id="next_btn">Next</button>
+
+<div>
+    <h1>{{quiz.title}} quiz by {{quiz.author}}</h1>
+</div>
+{% for i in range(quiz.cards|length) %}
+<div id="{{i}}" style="display:none">
+    <p>{{quiz.cards[i].question}}:</p>
+    <button onclick="option_chosen('{{quiz.cards[i].correct}}')">{{quiz.cards[i].correct}}</button>
+    <button onclick="option_chosen('{{quiz.cards[i].false1}}')">{{quiz.cards[i].false1}}</button>
+    {% if quiz.cards[i].false2 %}
+        <button onclick="option_chosen('{{quiz.cards[i].false2}}')">{{quiz.cards[i].false2}}</button>
+    {% endif %}
+    {% if quiz.cards[i].false3 %}
+        <button onclick="option_chosen('{{quiz.cards[i].false3}}')">{{quiz.cards[i].false3}}</button>
+    {% endif %}
+</div>
+{% endfor %}
+<button id="submit_btn">Submit</button>
+<script>
+    checkNextLast()
+    let card = document.getElementById(0);
+    card.style.display = "block";
+</script>
+
+{% endblock %}
