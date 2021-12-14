@@ -6,95 +6,220 @@
 
 <script>
 let currentDiv = "0"
-let correct = 0
+let answers = []
+let correct_answers = []
+let score = 0
 let total = 0
-let corrects = []
+let current_quiz_card = "0"
+let pass = {{quiz.pass}}
+
+const d = new Date();
+let time = d.getTime();
+
+
+
+
 {% for i in range(quiz.cards|length) %}
-    corrects.push("{{quiz.cards[i].correct}}")
+    correct_answers.push('{{quiz.cards[i].correct}}')
 {% endfor %}
-console.log(corrects)
-
-function lastCard() {
-
-  let oldDiv = document.getElementById(currentDiv);
-  if (oldDiv) {oldDiv.style.display = "none";}
-
-
-  currentDiv = (parseInt(currentDiv) - 1).toString();
-  let card = document.getElementById(currentDiv);
-  card.style.display = "block";
-
-  checkNextLast()
-}
-
 function nextCard() {
-
-  let oldDiv = document.getElementById(currentDiv);
-  oldDiv.style.display = "none";
-
+  let oldDiv = document.getElementById(currentDiv).style.display = "none";
+  let value = (parseInt(currentDiv) + 1) / "{{quiz.cards|length}}" * 100
+  let progressbar = document.getElementById("progressbar").style.width =  value + "%";
   currentDiv = (parseInt(currentDiv) + 1).toString();
-
-  let card = document.getElementById(currentDiv);
-  card.style.display = "block";
-
-  checkNextLast()
-}
-
-function checkNextLast() {
-  console.log("executed")
-
-  // Buttons
-  let btn_next = document.getElementById("next_btn");
-  let btn_last = document.getElementById("last_btn");
-  let btn_submit = document.getElementById("submit_btn");
-
-  if (document.getElementById((parseInt(currentDiv) + 1).toString())) {
-    btn_next.style.display="block"
-    btn_submit.style.display="none"
-  } else {
-      btn_next.style.display="none"
-      btn_submit.style.display="block"
-    }
-  if (document.getElementById((parseInt(currentDiv) - 1).toString())) {
-    btn_last.style.display="block"
-  } else {
-      btn_last.style.display="none"
-    }
+  let card = document.getElementById(currentDiv).style.display = "block";
 }
 
 function option_chosen(choose) {
-  if (corrects[parseInt(currentDiv)] == choose) {correct ++; total ++;}
-  console.log(correct)
-  if (document.getElementById((parseInt(currentDiv) + 1).toString())) {
-    nextCard()} else {
-        document.getElementById(currentDiv).style.display = "none";
-        currentDiv = (parseInt(currentDiv) + 1).toString();}
+  answers.push(choose);
+  console.log(choose);
+  if (current_quiz_card == currentDiv) {
+      current_quiz_card = (parseInt(current_quiz_card) + 1).toString()
+      if (choose == correct_answers[currentDiv]) {
+        score ++;
+        document.getElementById(choose).className = "btn btn-success";
+      } else {
+          document.getElementById(choose).className = "btn btn-danger";
+      }
+      total ++;
+
+      setTimeout(() => {
+      if (document.getElementById((parseInt(currentDiv) + 1).toString())) {
+        nextCard() }
+        else {
+
+          let value = (parseInt(currentDiv) + 1) / "{{quiz.cards|length}}" * 100
+          let progressbar = document.getElementById("progressbar").style.width =  value + "%";
+
+          // remove old
+          document.getElementById(currentDiv).style.display = "none";
+
+          const greetings = document.createElement("h2");
+          const score_p = document.createElement("p");
+          const percent = document.createElement("p");
+          const time_p = document.createElement("p");
+          const infoDiv = document.createElement("div");
+
+          const d = new Date();
+          let endTime = d.getTime();
+
+          const time_total = (endTime-time)/1000;
+          var h = Math.floor(time_total / 3600);
+          var m = Math.floor(time_total % 3600 / 60);
+          var s = Math.floor(time_total % 3600 % 60);
+
+          var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+          var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+          var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+
+          time_p.innerHTML = "Quiz took you " + hDisplay + mDisplay + sDisplay;
+
+          if ((parseInt(score) / parseInt(total)*100) > pass) {
+                greetings.innerHTML = "Woah, you Passed the quiz";
+                document.body.style.backgroundColor = "#4BB543"
+          }
+          else {
+                greetings.innerHTML = "better luck next time, u Failed this quiz";
+                document.body.style.backgroundColor = "#D0342C"
+          }
+
+          score_p.innerHTML = score.toString() + " correct chooses of total " + total + " chooses.";
+
+
+          percent.innerHTML = parseInt(score) / parseInt(total)*100 + "% correct";
+
+
+          infoDiv.appendChild(greetings);
+          infoDiv.appendChild(score_p);
+          infoDiv.appendChild(percent);
+          infoDiv.appendChild(time_p);
+          infoDiv.style.color = "rgba(251, 251, 254, 1)"
+          document.body.appendChild(infoDiv);
+
+          infoDiv.className = "position-absolute top-50 start-50 translate-middle"
+
+
+
+
+          const form = document.createElement("form");
+          form.method = "post";
+
+          const input = document.createElement("input");
+          input.value = answers
+          input.type = "hidden"
+          input.name = "answers"
+
+          const submit = document.createElement("button");
+          submit.innerHTML = "Continue"
+          submit.className = "btn btn-light"
+
+
+          form.appendChild(input);
+          form.appendChild(submit);
+          infoDiv.appendChild(form);
+
+          //form.submit();
+          currentDiv = "0";
+          answers = [];
+          }
+      }, 2000);
+  }
 }
 </script>
-<button onclick="lastCard()" id="last_btn">Last</button>
-<button onclick="nextCard()" id="next_btn">Next</button>
 
 <div>
-    <h1>{{quiz.title}} quiz by {{quiz.author}}</h1>
+    <h1 class="text-center" style="color: rgba(251, 251, 254, 1);">{{quiz.title}} quiz by {{quiz.author}}</h1>
+</div>
+<div class="position-relative m-4">
+      <div class="progress" style="height: 1px; background-color:#000;" title="progressbar">
+        <div class="progress-bar" role="progressbar" style="width: 0%; background-color:#FFF;" id="progressbar"></div>
+      </div>
+  <div  class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">0</div>
+  <div  class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">{{quiz.cards|length}}</div>
 </div>
 {% for i in range(quiz.cards|length) %}
-<div id="{{i}}" style="display:none">
-    <p>{{quiz.cards[i].question}}:</p>
-    <button onclick="option_chosen('{{quiz.cards[i].correct}}')">{{quiz.cards[i].correct}}</button>
-    <button onclick="option_chosen('{{quiz.cards[i].false1}}')">{{quiz.cards[i].false1}}</button>
+
+<div id="{{i}}" style="display:none; padding-top:20vh;">
+    <h3 class="text-center" style="color: rgba(251, 251, 254, 1); padding-bottom: 5vh;">{{quiz.cards[i].question}}</h3>
     {% if quiz.cards[i].false2 %}
-        <button onclick="option_chosen('{{quiz.cards[i].false2}}')">{{quiz.cards[i].false2}}</button>
-    {% endif %}
-    {% if quiz.cards[i].false3 %}
-        <button onclick="option_chosen('{{quiz.cards[i].false3}}')">{{quiz.cards[i].false3}}</button>
+        {% if quiz.cards[i].false3 %}
+            {% set amount = 4 %}
+                <div class="row" style="max-width:100vw;">
+                    <div class="d-grid col-2">
+                    </div>
+                    <div class="d-grid col-4">
+                        <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].correct}}')" id="{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                    </div>
+                    <div class="d-grid col-4">
+                        <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].false1}}')" id="{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+                    </div>
+                    <div class="d-grid col-2">
+                    </div>
+                </div>
+                <br>
+                <div class="row" style="width:100vw;">
+                    <div class="d-grid col-2">
+                    </div>
+                    <div class="d-grid col-4">
+                        <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].false2}}')" id="{{quiz.cards[i].false2}}">{{quiz.cards[i].false2}}</button>
+                    </div>
+                    <div class="d-grid col-4">
+                        <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].false3}}')" id="{{quiz.cards[i].false3}}">{{quiz.cards[i].false3}}</button>
+                    </div>
+                    <div class="d-grid col-2">
+                    </div>
+                </div>
+        {% else %}
+            {% set amount = 3 %}
+                <div class="row" style="max-width:100vw;">
+                    <div class="d-grid col-2">
+                    </div>
+                    <div class="d-grid col-4">
+                        <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].correct}}')" id="{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                    </div>
+                    <div class="d-grid col-4">
+                        <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].false1}}')" id="{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+                    </div>
+                    <div class="d-grid col-2">
+                    </div>
+                </div>
+                <br>
+                <div class="row" style="width:100vw;">
+                    <div class="d-grid col-2">
+                    </div>
+                    <div class="d-grid col-8">
+                        <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{quiz.cards[i].false2}}')" id="{{quiz.cards[i].false2}}">{{quiz.cards[i].false2}}</button>
+                    </div>
+                    <div class="d-grid col-2">
+                    </div>
+                </div>
+        {% endif %}
+    {% else %}
+        {% set amount = 2 %}
+        <div class="row" style="max-width:100vw;">
+            <div class="d-grid col-2">
+            </div>
+            <div class="d-grid col-8">
+                <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{quiz.cards[i].correct}}')" id="{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+            </div>
+            <div class="d-grid col-2">
+            </div>
+        </div>
+        <br>
+        <div class="row" style="width:100vw;">
+            <div class="d-grid col-2">
+            </div>
+            <div class="d-grid col-8">
+                <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{quiz.cards[i].false1}}')" id="{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+            </div>
+            <div class="d-grid col-2">
+            </div>
+        </div>
     {% endif %}
 </div>
 {% endfor %}
-<button id="submit_btn">Submit</button>
-<script>
-    checkNextLast()
-    let card = document.getElementById(0);
-    card.style.display = "block";
-</script>
+<!--<button id="submit_btn">Submit</button>-->
+<script>let card = document.getElementById(0).style.display = "block";</script>
+
 
 {% endblock %}

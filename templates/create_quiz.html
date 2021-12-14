@@ -6,6 +6,19 @@
 
 <script>
 let currentDiv = "1"
+
+function checkLast() {
+    const lastBtn = document.getElementById('BtnLast');
+
+    if (parseInt(currentDiv) < 2) {
+    lastBtn.style.display = "none"
+    }
+    else {
+    lastBtn.style.display = "block"
+
+    }
+}
+
 function lastCard() {
   console.log("btn pressed")
 
@@ -20,6 +33,7 @@ function lastCard() {
     oldDiv.style.display = "None"
     nextDiv.style.display = "block";
   }
+  checkLast()
 }
 function nextCard() {
   console.log("btn pressed")
@@ -29,6 +43,8 @@ function nextCard() {
   oldDiv.style.display = "None"
   currentDiv = (parseInt(currentDiv) + 1).toString()
   const submit_btn = document.getElementById(BUTTON);
+
+  checkLast()
 
   nextDiv = document.getElementById(currentDiv)
   if (nextDiv) {
@@ -76,23 +92,35 @@ function nextCard() {
 }
 
 </script>
-<h1>Create Quiz</h1>
-<button onclick="lastCard()">Last</button>
-<button onclick="nextCard()">Next</button>
-<form method="post" id="form">
-    <div id="1">
-        <p>Question 1:</p>
-        <input type="text" name="question_1" placeholder="Type question here" required>
-        <p>Correct answer:</p>
-        <input type="text" name="correct_1" placeholder="Type correct answer here" required>
-        <p>Incorrect answer:</p>
-        <input type="text" name="option1_1" placeholder="Type incorrect answer here" required>
-        <p>Incorrect answer:</p>
-        <input type="text" name="option2_1" placeholder="Type incorrect answer here">
-        <p>Incorrect answer:</p>
-        <input type="text" name="option3_1" placeholder="Type incorrect answer here">
-    </div>
-    <button id="BUTTON">Submit</button>
+<style>
+  h1 {color:red;}
+  p {color:#FFF;}
 
-</form>
+</style>
+<div class="position-absolute top-50 start-50 translate-middle">
+    <h1 style="top:0px;">Create Quiz</h1>
+
+    <button class="position-absolute start-0" id="BtnLast" onclick="lastCard()">Last</button>
+    <button class="position-absolute end-0" id="BtnNext" onclick="nextCard()">Next</button>
+    <br>
+    <br>
+
+
+    <form method="post" id="form" >
+        <div id="1" >
+            <p>Question 1:</p>
+            <input type="text" name="question_1" placeholder="Type question here" required>
+            <p>Correct answer:</p>
+            <input type="text" name="correct_1" placeholder="Type correct answer here" required>
+            <p>Incorrect answer:</p>
+            <input type="text" name="option1_1" placeholder="Type incorrect answer here" required>
+            <p>Incorrect answer:</p>
+            <input type="text" name="option2_1" placeholder="Type incorrect answer here">
+            <p>Incorrect answer:</p>
+            <input type="text" name="option3_1" placeholder="Type incorrect answer here">
+        </div>
+        <button id="BUTTON">Submit</button>
+
+    </form>
+    </div>
 {% endblock %}
