@@ -6,10 +6,11 @@ from __init__ import db
 
 
 # login page
-@quiz.route('/create', methods=['GET', 'POST'])
+@quiz.route('/create/', methods=['GET', 'POST'])
 def create():
     if request.method == "POST":
-        new_quiz = Quiz(title="test", author=current_user.id)
+        title = request.form.get(f'title')
+        new_quiz = Quiz(title=title, author=current_user.id)
 
         for i in range(100):
             question = request.form.get(f'question_{i+1}')
@@ -19,8 +20,10 @@ def create():
             option2 = request.form.get(f'option2_{i+1}')
             option3 = request.form.get(f'option3_{i+1}')
 
-            new_quiz.cards.append(Cards(quiz_id=new_quiz.id, question=question, correct=correct,
-                                        false1=option1, false2=option2, false3=option3))
+            if correct and option1:
+
+                new_quiz.cards.append(Cards(quiz_id=new_quiz.id, question=question, correct=correct,
+                                            false1=option1, false2=option2, false3=option3))
 
         db.session.add(new_quiz)
         db.session.commit()

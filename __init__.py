@@ -36,6 +36,6 @@ def create_app():
         # Error Management
         @app.errorhandler(404)
         def page_not_found(error):
-            return redirect(url_for('quiz.play'))
+            return redirect(url_for('quiz.all_quiz'))
 
         return app

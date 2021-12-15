@@ -20,94 +20,124 @@ function checkLast() {
 }
 
 function lastCard() {
+
   console.log("btn pressed")
 
   const form = document.getElementById('form');
-  const oldDiv = document.getElementById(currentDiv);
+  if (form.checkValidity()) {
 
-  currentDiv = (parseInt(currentDiv) - 1).toString()
-  const submit_btn = document.getElementById(BUTTON);
+      console.log("btn pressed")
 
-  nextDiv = document.getElementById(currentDiv)
-  if (nextDiv) {
-    oldDiv.style.display = "None"
-    nextDiv.style.display = "block";
-  }
-  checkLast()
+      const form = document.getElementById('form');
+      const oldDiv = document.getElementById(currentDiv);
+
+      currentDiv = (parseInt(currentDiv) - 1).toString()
+      const submit_btn = document.getElementById(BUTTON);
+
+      nextDiv = document.getElementById(currentDiv)
+      if (nextDiv) {
+        oldDiv.style.display = "None"
+        nextDiv.style.display = "block";
+      }
+      checkLast()
+
+} else {form.reportValidity()}
+
 }
+
+
 function nextCard() {
+
   console.log("btn pressed")
 
   const form = document.getElementById('form');
-  const oldDiv = document.getElementById(currentDiv);
-  oldDiv.style.display = "None"
-  currentDiv = (parseInt(currentDiv) + 1).toString()
-  const submit_btn = document.getElementById(BUTTON);
+  if (form.checkValidity()) {
 
-  checkLast()
+      const oldDiv = document.getElementById(currentDiv);
+      oldDiv.style.display = "None"
+      currentDiv = (parseInt(currentDiv) + 1).toString()
+      const submit_btn = document.getElementById(BUTTON);
 
-  nextDiv = document.getElementById(currentDiv)
-  if (nextDiv) {
-    nextDiv.style.display = "block";
-  }else {
+      checkLast()
 
-  const newDiv = document.createElement("div");
-  newDiv.id = currentDiv
-  const newQuestion = document.createElement("p");
-  newQuestion.innerHTML = "Question "+ currentDiv + ":"
-  const newQuestionInput = document.createElement("input");
-  newQuestionInput.name = "question_" + currentDiv
+      nextDiv = document.getElementById(currentDiv)
+      if (nextDiv) {
+        nextDiv.style.display = "block";
+      }else {
+
+      const newDiv = document.createElement("div");
+      newDiv.id = currentDiv
+      const newQuestion = document.createElement("p");
+      newQuestion.innerHTML = "Question "+ currentDiv + ":"
+      const newQuestionInput = document.createElement("input");
+      newQuestionInput.name = "question_" + currentDiv
+      newQuestionInput.required = true;
+      newQuestionInput.placeholder = "Type your question here (required)"
 
 
-  const newCorrect = document.createElement("p");
-  newCorrect.innerHTML = "Correct answer:"
-  const newCorrectInput = document.createElement("input");
-  newCorrectInput.name = "correct_" + currentDiv
-  const newIncorrect1 = document.createElement("p");
-  newIncorrect1.innerHTML = "Incorrect answer:"
-  const newIncorrectInput1 = document.createElement("input");
-  newIncorrectInput1.name = "option1_" + currentDiv
-  const newIncorrect2 = document.createElement("p");
-  newIncorrect2.innerHTML = "Incorrect answer:"
-  const newIncorrectInput2 = document.createElement("input");
-  newIncorrectInput2.name = "option2_" + currentDiv
-  const newIncorrect3 = document.createElement("p");
-  newIncorrect3.innerHTML = "Incorrect answer:"
-  const newIncorrectInput3 = document.createElement("input");
-  newIncorrectInput3.name = "option3_" + currentDiv
+      const newCorrect = document.createElement("p");
+      newCorrect.innerHTML = "Correct answer:"
+      const newCorrectInput = document.createElement("input");
+      newCorrectInput.required = true;
+      newCorrectInput.name = "correct_" + currentDiv
+      newCorrectInput.placeholder = "Type your correct answer here (required)"
+      const newIncorrect1 = document.createElement("p");
+      newIncorrect1.innerHTML = "Incorrect answer:"
+      const newIncorrectInput1 = document.createElement("input");
+      newIncorrectInput1.required = true;
+      newIncorrectInput1.name = "option1_" + currentDiv
+      newIncorrectInput1.placeholder = "Type your incorrect answer here (required)"
+      const newIncorrect2 = document.createElement("p");
+      newIncorrect2.innerHTML = "Incorrect answer:"
+      const newIncorrectInput2 = document.createElement("input");
+      newIncorrectInput2.name = "option2_" + currentDiv
+      newIncorrectInput2.placeholder = "Type your incorrect answer here (optional)"
+      const newIncorrect3 = document.createElement("p");
+      newIncorrect3.innerHTML = "Incorrect answer:"
+      const newIncorrectInput3 = document.createElement("input");
+      newIncorrectInput3.name = "option3_" + currentDiv
+      newIncorrectInput3.placeholder = "Type your incorrect answer here (optional)"
 
-  newDiv.appendChild(newQuestion);
-  newDiv.appendChild(newQuestionInput);
-  newDiv.appendChild(newCorrect);
-  newDiv.appendChild(newCorrectInput);
-  newDiv.appendChild(newIncorrect1);
-  newDiv.appendChild(newIncorrectInput1);
-  newDiv.appendChild(newIncorrect2);
-  newDiv.appendChild(newIncorrectInput2);
-  newDiv.appendChild(newIncorrect3);
-  newDiv.appendChild(newIncorrectInput3);
+      newDiv.appendChild(newQuestion);
+      newDiv.appendChild(newQuestionInput);
+      newDiv.appendChild(newCorrect);
+      newDiv.appendChild(newCorrectInput);
+      newDiv.appendChild(newIncorrect1);
+      newDiv.appendChild(newIncorrectInput1);
+      newDiv.appendChild(newIncorrect2);
+      newDiv.appendChild(newIncorrectInput2);
+      newDiv.appendChild(newIncorrect3);
+      newDiv.appendChild(newIncorrectInput3);
 
-  form.insertBefore(newDiv, oldDiv.nextSibling);
-  }
+      form.insertBefore(newDiv, oldDiv.nextSibling);
+      }
+
+} else {form.reportValidity()}
+
 }
 
 </script>
 <style>
-  h1 {color:red;}
+  h1 {color:#eb196e; text-align:center;}
   p {color:#FFF;}
+  form div input {width:100%;}
 
 </style>
 <div class="position-absolute top-50 start-50 translate-middle">
-    <h1 style="top:0px;">Create Quiz</h1>
+    <br>
+    <h1 style="top:0px; text-align:center;">Create Quiz</h1>
+    <br>
 
-    <button class="position-absolute start-0" id="BtnLast" onclick="lastCard()">Last</button>
-    <button class="position-absolute end-0" id="BtnNext" onclick="nextCard()">Next</button>
+    <button class="position-absolute start-0 btn btn-light" id="BtnLast" style="display:none;" onclick="lastCard()"><< last</button>
+    <button class="position-absolute end-0 btn btn-light" id="BtnNext" onclick="nextCard()">next >></button>
     <br>
     <br>
 
 
-    <form method="post" id="form" >
+    <form method="post" id="form" style="width:30vw;">
         <div id="1" >
+            <p>Quiz title:</p>
+            <input type="text" name="title" placeholder="Type Quiz title here" required>
             <p>Question 1:</p>
             <input type="text" name="question_1" placeholder="Type question here" required>
             <p>Correct answer:</p>
@@ -119,7 +149,8 @@ function nextCard() {
             <p>Incorrect answer:</p>
             <input type="text" name="option3_1" placeholder="Type incorrect answer here">
         </div>
-        <button id="BUTTON">Submit</button>
+        <br>
+        <button id="BUTTON" class="btn btn-light" style="width:100%">Submit Quiz</button>
 
     </form>
     </div>

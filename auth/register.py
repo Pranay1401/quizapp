@@ -6,7 +6,7 @@ from __init__ import db
 
 
 # Register page
-@account.route('/register', methods=['GET', 'POST'])
+@account.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
         username = request.form.get('username')
@@ -22,6 +22,6 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
-            return "Successfully authenticated"
+            return redirect(url_for('quiz.all_quiz'))
 
     return render_template("register.html")

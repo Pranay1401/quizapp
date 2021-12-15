@@ -11,13 +11,16 @@ class Quiz(db.Model, UserMixin):
     title = db.Column(db.String(32), nullable=False)
     cards = db.relationship('Cards', backref='quiz')
     author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    best_time = db.Column(db.Integer, nullable=False, default=0)
+    total_tries = db.Column(db.Integer, nullable=False, default=0)
+    scoreboard = db.relationship('Scoreboard', backref='quiz')
 
     def __init__(self, title, author):
         self.title = title
         self.author = author
 
 
-# Options object
+# Cards object
 class Cards(db.Model, UserMixin):
     __tablename__ = 'cards'
 
@@ -36,3 +39,20 @@ class Cards(db.Model, UserMixin):
         self.false1 = false1
         self.false2 = false2
         self.false3 = false3
+
+
+# Scoreboard object
+class Scoreboard(db.Model, UserMixin):
+    __tablename__ = 'scoreboard'
+
+    id = db.Column(db.Integer, primary_key=True)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    time = db.Column(db.Integer, nullable=False)
+    score = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, quiz_id, user_id, time, score):
+        self.quiz_id = quiz_id
+        self.user_id = user_id
+        self.time = time
+        self.score = score
