@@ -9,8 +9,12 @@ from __init__ import db
 @quiz.route('/create/', methods=['GET', 'POST'])
 def create():
     if request.method == "POST":
+        if current_user.is_authenticated:
+            user_id = current_user.id
+        else:
+            user_id = 0
         title = request.form.get(f'title')
-        new_quiz = Quiz(title=title, author=current_user.id)
+        new_quiz = Quiz(title=title, author=user_id)
 
         for i in range(100):
             question = request.form.get(f'question_{i+1}')

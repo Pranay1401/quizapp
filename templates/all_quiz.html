@@ -7,7 +7,8 @@
 <script>
 </script>
 <style>
-  h1 {color:#eb196e; text-align:center;}
+  h1 {color:#eb196e; text-align:center;text-align: center;font-weight: 600;font-size: 3em;margin: 0;}
+
 
 .flex-item {
   width: 250px;
@@ -218,9 +219,9 @@
               <div class="card">
                 <p class="card__name">{{all_quizs[i].title}}</p>
 
-                  <p>Total takes: 32</p>
+                  <p>Total takes: {{total_takes[i]}} times</p>
                   <br>
-                  <p>Best time: 1:26</p>
+                  <p>Best time: {{best_times[i]}} s</p>
 
                 <ul class="social-icons">
                   <li><a onclick=" window.open('mailto:?subject=Try%20this%20quiz%20and%20share%20how%20u%20did.&body=' + window.location.href + '/{{i+1}}%20');"><i class="fa fa-envelope"></i></a></li>
@@ -229,7 +230,7 @@
                   <li><a onclick=" window.open('https://www.youtube.com/watch?v=6hlTj-cK7XU?autoplay=1')"><i class="fa fa-youtube"></i></a></li>
                 </ul>
                 <button class="btn draw-border" onclick="window.location=('/quiz/play/{{i+1}}')">Take the quiz</button>
-                <button class="btn draw-border" onclick="window.location=('/quiz/scoreboard/{{i+1}}')">Scoreboard</button>
+                <button class="btn draw-border" onclick="window.location=('/quiz/scoreboard/{{i+1}}')">Leaderboard</button>
 
               </div>
           </li>

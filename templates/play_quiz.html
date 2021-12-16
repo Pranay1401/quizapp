@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}New Quiz - QuizApp{% endblock %}
+{% block title %}{{quiz.title}} - QuizApp{% endblock %}
 
 
 {% block body %}
@@ -32,10 +32,9 @@ function nextCard() {
 
 function option_chosen(choose) {
   answers.push(choose);
-  console.log(choose);
   if (current_quiz_card == currentDiv) {
       current_quiz_card = (parseInt(current_quiz_card) + 1).toString()
-      if (choose == correct_answers[currentDiv]) {
+      if (choose == currentDiv+correct_answers[currentDiv]) {
         score ++;
         document.getElementById(choose).className = "btn btn-success";
       } else {
@@ -105,7 +104,7 @@ function option_chosen(choose) {
           form.method = "post";
 
           const input_time = document.createElement("input");
-          input_time.value = time_total;
+          input_time.value = s;
           input_time.type = "hidden";
           input_time.name = "time";
 
@@ -132,8 +131,19 @@ function option_chosen(choose) {
 }
 </script>
 
+<style>
+header h1 {
+  text-align: center;
+  font-weight: 600;
+	font-size: 3em;
+	margin: 0;
+}
+</style>
+
 <div>
-    <h1 class="text-center" style="color: rgba(251, 251, 254, 1);">{{quiz.title}} quiz by {{quiz.author}}</h1>
+    <header>
+        <h1 style="color:#EEE;">{{quiz.title}} by {{quiz.author}}</h1>
+    </header>
 </div>
 <div class="position-relative m-4">
       <div class="progress" style="height: 1px; background-color:#000;" title="progressbar">
@@ -144,69 +154,199 @@ function option_chosen(choose) {
 </div>
 {% for i in range(quiz.cards|length) %}
 
-<div id="{{i}}" style="display:none; padding-top:20vh;">
+<div id="{{i}}" style="display:none; padding-top:10vh;">
     {% if quiz.cards[i].question %}
+        {{quiz.randoms[i]}}
         <h3 class="text-center" style="color: rgba(251, 251, 254, 1); padding-bottom: 5vh;">{{quiz.cards[i].question}}</h3>
         {% if quiz.cards[i].false2 %}
             {% if quiz.cards[i].false3 %}
                 {% set amount = 4 %}
-                    <div class="row" style="max-width:100vw;">
+                    {% if quiz.randoms[i] == 0 %}
+                        <div class="row" style="max-width:100vw;">
                         <div class="d-grid col-2">
                         </div>
                         <div class="d-grid col-4">
-                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].correct}}')" id="{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].correct}}')" id="{{i}}{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
                         </div>
                         <div class="d-grid col-4">
-                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].false1}}')" id="{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
-                        </div>
-                        <div class="d-grid col-2">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row" style="width:100vw;">
-                        <div class="d-grid col-2">
-                        </div>
-                        <div class="d-grid col-4">
-                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].false2}}')" id="{{quiz.cards[i].false2}}">{{quiz.cards[i].false2}}</button>
-                        </div>
-                        <div class="d-grid col-4">
-                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].false3}}')" id="{{quiz.cards[i].false3}}">{{quiz.cards[i].false3}}</button>
+                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false1}}')" id="{{i}}{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
                         </div>
                         <div class="d-grid col-2">
                         </div>
                     </div>
+                        <br>
+                        <div class="row" style="width:100vw;">
+                        <div class="d-grid col-2">
+                        </div>
+                        <div class="d-grid col-4">
+                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false3}}')" id="{{i}}{{quiz.cards[i].false3}}">{{quiz.cards[i].false3}}</button>
+                        </div>
+                        <div class="d-grid col-4">
+                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false2}}')" id="{{i}}{{quiz.cards[i].false2}}">{{quiz.cards[i].false2}}</button>
+                        </div>
+                        <div class="d-grid col-2">
+                        </div>
+                    </div>
+                    {% elif quiz.randoms[i] == 1 %}
+                        <div class="row" style="max-width:100vw;">
+                            <div class="d-grid col-2">
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false3}}')" id="{{i}}{{quiz.cards[i].false3}}">{{quiz.cards[i].false3}}</button>
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].correct}}')" id="{{i}}{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                            </div>
+                            <div class="d-grid col-2">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" style="width:100vw;">
+                        <div class="d-grid col-2">
+                        </div>
+                        <div class="d-grid col-4">
+                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false1}}')" id="{{i}}{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+                        </div>
+                        <div class="d-grid col-4">
+                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false2}}')" id="{{i}}{{quiz.cards[i].false2}}">{{quiz.cards[i].false2}}</button>
+                        </div>
+                        <div class="d-grid col-2">
+                        </div>
+                    </div>
+                    {% elif quiz.randoms[i] == 2 %}
+                        <div class="row" style="max-width:100vw;">
+                            <div class="d-grid col-2">
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false2}}')" id="{{i}}{{quiz.cards[i].false2}}">{{quiz.cards[i].false2}}</button>
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false1}}')" id="{{i}}{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+                            </div>
+                            <div class="d-grid col-2">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" style="width:100vw;">
+                        <div class="d-grid col-2">
+                        </div>
+                        <div class="d-grid col-4">
+                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].correct}}')" id="{{i}}{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                        </div>
+                        <div class="d-grid col-4">
+                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false3}}')" id="{{i}}{{quiz.cards[i].false3}}">{{quiz.cards[i].false3}}</button>
+                        </div>
+                        <div class="d-grid col-2">
+                        </div>
+                    </div>
+                    {% elif quiz.randoms[i] == 3 %}
+                        <div class="row" style="max-width:100vw;">
+                            <div class="d-grid col-2">
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false3}}')" id="{{i}}{{quiz.cards[i].false3}}">{{quiz.cards[i].false3}}</button>
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false2}}')" id="{{i}}{{quiz.cards[i].false2}}">{{quiz.cards[i].false2}}</button>
+                            </div>
+                            <div class="d-grid col-2">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" style="width:100vw;">
+                        <div class="d-grid col-2">
+                        </div>
+                        <div class="d-grid col-4">
+                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false1}}')" id="{{i}}{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+                        </div>
+                        <div class="d-grid col-4">
+                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].correct}}')" id="{{i}}{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                        </div>
+                        <div class="d-grid col-2">
+                        </div>
+                    </div>
+                    {% endif %}
             {% else %}
                 {% set amount = 3 %}
-                    <div class="row" style="max-width:100vw;">
-                        <div class="d-grid col-2">
+                    {% if quiz.randoms[i] == 0 %}
+                        <div class="row" style="max-width:100vw;">
+                            <div class="d-grid col-2">
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].correct}}')" id="{{i}}{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false1}}')" id="{{i}}{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+                            </div>
+                            <div class="d-grid col-2">
+                            </div>
                         </div>
-                        <div class="d-grid col-4">
-                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].correct}}')" id="{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                        <br>
+                        <div class="row" style="width:100vw;">
+                            <div class="d-grid col-2">
+                            </div>
+                            <div class="d-grid col-8">
+                                <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false2}}')" id="{{i}}{{quiz.cards[i].false2}}">{{quiz.cards[i].false2}}</button>
+                            </div>
+                            <div class="d-grid col-2">
+                            </div>
                         </div>
-                        <div class="d-grid col-4">
-                            <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{quiz.cards[i].false1}}')" id="{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+                    {% elif quiz.randoms[i] == 1 %}
+                        <div class="row" style="max-width:100vw;">
+                            <div class="d-grid col-2">
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false2}}')" id="{{i}}{{quiz.cards[i].false2}}">{{quiz.cards[i].false2}}</button>
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].correct}}')" id="{{i}}{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                            </div>
+                            <div class="d-grid col-2">
+                            </div>
                         </div>
-                        <div class="d-grid col-2">
+                        <br>
+                        <div class="row" style="width:100vw;">
+                            <div class="d-grid col-2">
+                            </div>
+                            <div class="d-grid col-8">
+                                <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false1}}')" id="{{i}}{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+                            </div>
+                            <div class="d-grid col-2">
+                            </div>
                         </div>
-                    </div>
-                    <br>
-                    <div class="row" style="width:100vw;">
-                        <div class="d-grid col-2">
+                    {% elif quiz.randoms[i] == 2 %}
+                        <div class="row" style="max-width:100vw;">
+                            <div class="d-grid col-2">
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false1}}')" id="{{i}}{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+                            </div>
+                            <div class="d-grid col-4">
+                                <button class="btn btn-light" style="padding:10%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false2}}')" id="{{i}}{{quiz.cards[i].false2}}">{{quiz.cards[i].false2}}</button>
+                            </div>
+                            <div class="d-grid col-2">
+                            </div>
                         </div>
-                        <div class="d-grid col-8">
-                            <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{quiz.cards[i].false2}}')" id="{{quiz.cards[i].false2}}">{{quiz.cards[i].false2}}</button>
+                        <br>
+                        <div class="row" style="width:100vw;">
+                            <div class="d-grid col-2">
+                            </div>
+                            <div class="d-grid col-8">
+                                <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{i}}{{quiz.cards[i].correct}}')" id="{{i}}{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                            </div>
+                            <div class="d-grid col-2">
+                            </div>
                         </div>
-                        <div class="d-grid col-2">
-                        </div>
-                    </div>
+                    {% endif %}
             {% endif %}
         {% else %}
             {% set amount = 2 %}
+            {% if quiz.randoms[i] == 0 %}
             <div class="row" style="max-width:100vw;">
                 <div class="d-grid col-2">
                 </div>
                 <div class="d-grid col-8">
-                    <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{quiz.cards[i].correct}}')" id="{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                    <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{i}}{{quiz.cards[i].correct}}')" id="{{i}}{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
                 </div>
                 <div class="d-grid col-2">
                 </div>
@@ -216,11 +356,32 @@ function option_chosen(choose) {
                 <div class="d-grid col-2">
                 </div>
                 <div class="d-grid col-8">
-                    <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{quiz.cards[i].false1}}')" id="{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+                    <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false1}}')" id="{{i}}{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
                 </div>
                 <div class="d-grid col-2">
                 </div>
             </div>
+            {% elif quiz.randoms[i] == 1 %}
+            <div class="row" style="max-width:100vw;">
+                <div class="d-grid col-2">
+                </div>
+                <div class="d-grid col-8">
+                    <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{i}}{{quiz.cards[i].false1}}')" id="{{i}}{{quiz.cards[i].false1}}">{{quiz.cards[i].false1}}</button>
+                </div>
+                <div class="d-grid col-2">
+                </div>
+            </div>
+            <br>
+            <div class="row" style="width:100vw;">
+                <div class="d-grid col-2">
+                </div>
+                <div class="d-grid col-8">
+                    <button class="btn btn-light" style="padding:5%;" onclick="option_chosen('{{i}}{{quiz.cards[i].correct}}')" id="{{i}}{{quiz.cards[i].correct}}">{{quiz.cards[i].correct}}</button>
+                </div>
+                <div class="d-grid col-2">
+                </div>
+            </div>
+            {% endif %}
         {% endif %}
     {% endif %}
 </div>
