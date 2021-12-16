@@ -8,7 +8,7 @@ class Quiz(db.Model, UserMixin):
     __tablename__ = 'quiz'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(32), nullable=False)
+    title = db.Column(db.String(64), nullable=False)
     cards = db.relationship('Cards', backref='quiz')
     author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     best_time = db.Column(db.Integer, nullable=False, default=0)
@@ -26,11 +26,11 @@ class Cards(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
-    question = db.Column(db.String(32), nullable=False)
-    correct = db.Column(db.String(32), nullable=False)
-    false1 = db.Column(db.String(32), nullable=False)
-    false2 = db.Column(db.String(32), nullable=True, default=None)
-    false3 = db.Column(db.String(32), nullable=True, default=None)
+    question = db.Column(db.String(128), nullable=False)
+    correct = db.Column(db.String(64), nullable=False)
+    false1 = db.Column(db.String(64), nullable=False)
+    false2 = db.Column(db.String(64), nullable=True, default=None)
+    false3 = db.Column(db.String(64), nullable=True, default=None)
 
     def __init__(self, quiz_id, question, correct, false1, false2, false3):
         self.quiz_id = quiz_id
