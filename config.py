@@ -18,7 +18,7 @@ class Config:
 
     # Flask-SQLAlchemy
     DB_NAME = "database.db"
-    db_url = environ.get("DATABASE_URL") or f"sqlite:///{DB_NAME}"
-    SQLALCHEMY_DATABASE_URI = db_url
+    db_url = environ.get("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI: str = environ.get('DATABASE_URL', 'sqlite:///app.db').replace('postgres', 'postgresql')
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
