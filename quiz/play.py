@@ -6,14 +6,6 @@ from __init__ import db
 from sqlalchemy import desc
 import random
 
-quest = User.query.filter_by(id=0).first()
-if not quest:
-    new_user = User(id=0, username="Guest")
-    new_user.set_password("password")
-    db.session.add(new_user)
-    db.session.commit()
-    print("Quest user created")
-
 
 # play page
 @quiz.route('/play/<quiz_id>/', methods=['GET', 'POST'])

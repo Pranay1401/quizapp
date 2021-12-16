@@ -37,4 +37,12 @@ def create_app():
         def page_not_found(error):
             return redirect(url_for('quiz.all_quiz'))
 
+        quest = User.query.filter_by(id=0).first()
+        if not quest:
+            new_user = User(id=0, username="Guest")
+            new_user.set_password("password")
+            db.session.add(new_user)
+            db.session.commit()
+            print("Quest user created")
+
         return app
