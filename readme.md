@@ -67,7 +67,7 @@ This app requires [python 3.7+](https://www.python.org/downloads/) to run.
 
 Clone git repo
 ```sh
-git clone https://github.com/JesperKauppinen/keyboard-race.git
+git clone https://github.com/JesperKauppinen/quizapp.git
 ```
 
 After cloning or downloading this git repo, install required python libraries
