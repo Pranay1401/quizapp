@@ -69,14 +69,16 @@ def all_quiz():
 @quiz.route('/scoreboard/<quiz_id>', methods=['GET'])
 def scoreboard(quiz_id):
     quiz = Quiz.query.filter_by(id=quiz_id).first()
-    scoreboard_all = Scoreboard.query.order_by(Scoreboard.score.desc()).order_by(Scoreboard.time).filter_by(quiz_id=quiz.id).all()
-    all_quizzes = []
-    for i in range(len(scoreboard_all)):
-        quiz_ = {
-            "username": User.query.filter_by(id=scoreboard_all[i].user_id).first().username,
-            "score": scoreboard_all[i].score,
-            "time": scoreboard_all[i].time
+    if quiz:
+        scoreboard_all = Scoreboard.query.order_by(Scoreboard.score.desc()).order_by(Scoreboard.time).filter_by(quiz_id=quiz.id).all()
+        all_quizzes = []
+        for i in range(len(scoreboard_all)):
+            quiz_ = {
+                "username": User.query.filter_by(id=scoreboard_all[i].user_id).first().username,
+                "score": scoreboard_all[i].score,
+                "time": scoreboard_all[i].time
 
-        }
-        all_quizzes.append(quiz_)
-    return render_template("play_results.html", quiz=all_quizzes)
+            }
+            all_quizzes.append(quiz_)
+        return render_template("play_results.html", quiz=all_quizzes)
+    return redirect(url_for("quiz.all_quiz"))

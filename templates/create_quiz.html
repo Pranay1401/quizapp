@@ -72,6 +72,7 @@ function nextCard() {
       const newQuestionInput = document.createElement("input");
       newQuestionInput.name = "question_" + currentDiv
       newQuestionInput.required = true;
+      newQuestionInput.maxLength = 128;
       newQuestionInput.placeholder = "Type your question here (required)"
 
 
@@ -79,23 +80,27 @@ function nextCard() {
       newCorrect.innerHTML = "Correct answer:"
       const newCorrectInput = document.createElement("input");
       newCorrectInput.required = true;
+      newCorrectInput.maxLength = 64;
       newCorrectInput.name = "correct_" + currentDiv
       newCorrectInput.placeholder = "Type your correct answer here (required)"
       const newIncorrect1 = document.createElement("p");
       newIncorrect1.innerHTML = "Incorrect answer:"
       const newIncorrectInput1 = document.createElement("input");
       newIncorrectInput1.required = true;
+      newIncorrectInput1.maxLength = 64;
       newIncorrectInput1.name = "option1_" + currentDiv
       newIncorrectInput1.placeholder = "Type your incorrect answer here (required)"
       const newIncorrect2 = document.createElement("p");
       newIncorrect2.innerHTML = "Incorrect answer:"
       const newIncorrectInput2 = document.createElement("input");
-      newIncorrectInput2.name = "option2_" + currentDiv
+      newIncorrectInput2.name = "option2_" + currentDiv;
+      newIncorrectInput2.maxLength = 64;
       newIncorrectInput2.placeholder = "Type your incorrect answer here (optional)"
       const newIncorrect3 = document.createElement("p");
       newIncorrect3.innerHTML = "Incorrect answer:"
       const newIncorrectInput3 = document.createElement("input");
       newIncorrectInput3.name = "option3_" + currentDiv
+      newIncorrectInput3.maxLength = 64;
       newIncorrectInput3.placeholder = "Type your incorrect answer here (optional)"
 
       newDiv.appendChild(newQuestion);
@@ -137,17 +142,17 @@ function nextCard() {
     <form method="post" id="form" style="width:30vw;">
         <div id="1" >
             <p>Quiz title:</p>
-            <input type="text" name="title" placeholder="Type Quiz title here" required>
+            <input type="text" name="title" placeholder="Type Quiz title here" required maxlength="64">
             <p>Question 1:</p>
-            <input type="text" name="question_1" placeholder="Type question here" required>
+            <input type="text" name="question_1" placeholder="Type question here" required maxlength="128">
             <p>Correct answer:</p>
-            <input type="text" name="correct_1" placeholder="Type correct answer here" required>
+            <input type="text" name="correct_1" placeholder="Type correct answer here" required maxlength="64">
             <p>Incorrect answer:</p>
-            <input type="text" name="option1_1" placeholder="Type incorrect answer here" required>
+            <input type="text" name="option1_1" placeholder="Type incorrect answer here" required maxlength="64">
             <p>Incorrect answer:</p>
-            <input type="text" name="option2_1" placeholder="Type incorrect answer here">
+            <input type="text" name="option2_1" placeholder="Type incorrect answer here" maxlength="64">
             <p>Incorrect answer:</p>
-            <input type="text" name="option3_1" placeholder="Type incorrect answer here">
+            <input type="text" name="option3_1" placeholder="Type incorrect answer here" maxlength="64">
         </div>
         <br>
         <button id="BUTTON" class="btn btn-light" style="width:100%">Submit Quiz</button>
