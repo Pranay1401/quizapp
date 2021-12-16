@@ -8,6 +8,12 @@ The project was made for learning purposes.
 ### What I learned
 Once again I learned lots of new things. For the first time I used Bootstrap. I also learned how to order database query in sqlalchemy.
 ## [Live Demo](https://example.com/)
+Quiz page:
+![image](https://user-images.githubusercontent.com/76889226/146368139-39963470-4887-4bcb-8517-cdcbd42ef2b9.png)
+Leaderboard page
+![image](https://user-images.githubusercontent.com/76889226/146368751-45191415-3fe8-4ff0-b6e2-9472a01d2374.png)
+
+
 
 
 ## About the Challenge
