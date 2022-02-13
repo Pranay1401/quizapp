@@ -7,7 +7,7 @@ This project was made as part of the weekly programming challenge hosted by [Dev
 The project was made for learning purposes.
 ### What I learned
 Once again I learned lots of new things. For the first time I used Bootstrap. I also learned how to order database query in sqlalchemy.
-## [Live Demo](https://example.com/)
+## [Live Demo](https://jeb-quiz.herokuapp.com/quiz/play/)
 Quiz page:
 ![image](https://user-images.githubusercontent.com/76889226/146368139-39963470-4887-4bcb-8517-cdcbd42ef2b9.png)
 Leaderboard page
