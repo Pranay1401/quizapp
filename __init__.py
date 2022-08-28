@@ -1,6 +1,8 @@
+from os import environ
+
 from flask import Flask, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -17,7 +19,7 @@ def create_app():
     login_manager.init_app(app)
 
     with app.app_context():
-        from models import Quiz, User
+        from models import User
         from auth import account
         from quiz import quiz
 
@@ -39,8 +41,9 @@ def create_app():
 
         quest = User.query.filter_by(id=0).first()
         if not quest:
+            # Quest user will be added to scoreboard when user is not signed in
             new_user = User(id=0, username="Guest")
-            new_user.set_password("password")
+            new_user.set_password(environ.get("QUEST_PASSWORD") or "Pa$$w0rd")
             db.session.add(new_user)
             db.session.commit()
             print("Quest user created")
