@@ -7,7 +7,7 @@ This project was made as part of the weekly programming challenge hosted by [Dev
 The project was made for learning purposes.
 ### What I learned
 Once again I learned lots of new things. For the first time I used Bootstrap. I also learned how to order database query in sqlalchemy.
-## [Live Demo](https://jeb-quiz.herokuapp.com/quiz/play/)
+## [Live Demo](https://quiz.jeb4.dev)
 Quiz page:
 ![image](https://user-images.githubusercontent.com/76889226/146368139-39963470-4887-4bcb-8517-cdcbd42ef2b9.png)
 Leaderboard page
@@ -49,16 +49,13 @@ As a developer you can create a quiz application for testing coding skills of ot
 The app is written in python using Flaks-library. 
 Frontend is written in html5, css and vanilla js.
 Backend uses Flask sqlalchemy and flask-login.
-App is deployed in [Heroku].
+App is deployed in docker container in virtual private server.
 
 #### Frameworks and libraries:
 
 - [Flask] - Micro web framework written in python.
 - [Flask-Socketio](https://flask-socketio.readthedocs.io/en/latest/) - Flask-SocketIO gives Flask applications access to low latency bi-directional communications between the clients and the server.
 - [Flask-login] - Flask-Login provides user session management for Flask.
-#### Deployment
-- [Heroku] - Heroku is a cloud platform as a service supporting several programming languages.
-
 
 
 ## Installation and running
@@ -76,18 +73,26 @@ After cloning or downloading this git repo, install required python libraries
 pip install -r requirements.txt
 ```
 
+Add environment variables that are used in [config.py](config.py).
+
 run app.py
 ```sh
 python app.py
 ```
 ### Deployment
-App is hosted in heroku. Use `HEROKU` branch for heroku deployment as it also contains `Procfile`.
+#### Deploy using docker
+- Fill secrets in [Dockerfile](Dockerfile).
+- For database, you need sql database like MariaDB. You can also use sqlite database by removing `DATABASE_URL` in Dockerfile. 
+- You can generate docker image using command `docker image build -t quizapp .` in content root directory (`projects/quizapp`).
+- You can start docker container with command `docker run -d -p PORT:80 quizapp`, fill PORT with the port you want the app run.
+
+
 
 
 ## Contribute?
 Want to contribute? Awesome!  
 This project was part of weekly challenges hosted by [DevJam] and won't be updated.
-Maybe you would like to work with us, hit me up and let's talk. :)
+Maybe you would like to work with us, hit me up and let's talk. You can also keep working on this project yourself.
 
 ## Credits
 - [Scoreboard design](https://codepen.io/hakura/pen/ebglw) - Leaderboard design
@@ -96,7 +101,7 @@ Maybe you would like to work with us, hit me up and let's talk. :)
 - [Fontawesome](https://fontawesome.com/) - Icons
 
 ## License
-MIT
+[MIT License](LICENSE)
 
 
    [Flask]: <https://flask.palletsprojects.com/en/2.0.x/>
@@ -107,4 +112,3 @@ MIT
    [sharingbuttons]: <https://sharingbuttons.io/>
    [Handdrawn]: <https://fxaeberhard.github.io/handdrawn.css/>
    [imgbb]: <https://imgbb.com/upload>
-   [Heroku]: <https://www.heroku.com>
