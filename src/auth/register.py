@@ -1,12 +1,11 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from flask_login import login_user, login_required, logout_user, current_user
-from auth import account
-from models import User
-from __init__ import db
+from flask import render_template, request, redirect, url_for
+from flask_login import login_user
+from . import account as blueprint_account
+from ..models import db, User
 
 
 # Register page
-@account.route('/register/', methods=['GET', 'POST'])
+@blueprint_account.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
         username = request.form.get('username')

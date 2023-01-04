@@ -1,16 +1,14 @@
 """Flask app configuration."""
 from os import environ, path
 
-
 basedir = path.abspath(path.dirname(__file__))
 
 
 class Config:
     """Set Flask configuration from environment variables."""
 
-    FLASK_APP = 'wsgi.py'
-    FLASK_ENV = environ.get('FLASK_DEBUG') or True
-    SECRET_KEY = environ.get('SECRET_KEY') or 'Km&zT!1@a#F1H^y1KEYtNGuR##pR4NPy'
+    FLASK_ENV = environ.get('FLASK_ENV') or True
+    SECRET_KEY = environ.get('SECRET_KEY') or 'ZADFpvM@RnH5%@KcECduv2RpPCuWh@&&'
 
     # Static Assets
     STATIC_FOLDER = 'static'

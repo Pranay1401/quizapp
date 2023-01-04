@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Quiz's - QuizApp{% endblock %}
+{% block style %}{{ url_for('static', filename='css/all_quiz.css') }}{% endblock %}
+
+
+{% block body %}
+
+
+<div>
+    <h1>QUIZZES</h1>
+    <ul class="flex-container wrap">
+
+    {% for i in range(0, all_quizs|length) %}
+          <li class="flex-item">
+              <div class="card">
+                <p class="card__name">{{all_quizs[i].title}}</p>
+
+                  <p>Total takes: {{total_takes[i]}} times</p>
+                  <br>
+                  <p>Best time: {{best_times[i]}} s</p>
+
+                <ul class="social-icons">
+                  <li><a onclick=" window.open('mailto:?subject=Try%20this%20quiz%20and%20share%20how%20u%20did.&body=' + window.location.href + '/{{i+1}}%20');"><i class="fa fa-envelope"></i></a></li>
+                  <li><a onclick=" window.open('https://twitter.com/intent/tweet?url=' + window.location.href + '{{i+1}}&text=Try%20this%20quiz%20and%20share%20how%20you%20did.');"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="#"><i class='fab fa-discord'></i></a></li>
+                  <li><a onclick=" window.open('https://www.youtube.com/watch?v=6hlTj-cK7XU?autoplay=1')"><i class="fa fa-youtube"></i></a></li>
+                </ul>
+                <button class="btn draw-border" onclick="window.location=('/quiz/play/{{i+1}}')">Take the quiz</button>
+                <button class="btn draw-border" onclick="window.location=('/quiz/scoreboard/{{i+1}}')">Leaderboard</button>
+
+              </div>
+          </li>
+    {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock %}

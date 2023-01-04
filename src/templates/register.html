@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Register - QuizApp{% endblock %}
+{% block style %}{{ url_for('static', filename='css/account.css') }}{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <h1>Register</h1>
+
+    <form method="post">
+        <div>
+            <label for="uname">Username</label>
+            <input id="uname" type="text" name="username" placeholder="username" required maxlength="32">
+        </div>
+        <div>
+            <label for="passwd">Password</label>
+            <input id="passwd" type="password" name="password" placeholder="password" required>
+        </div>
+        <div>
+            <button id="submit" class="btn btn-light">Register</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
