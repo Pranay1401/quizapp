@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}New Quiz - QuizApp{% endblock %}
+
+{% block style %}{{ url_for('static', filename='css/create.css') }}{% endblock %}
+{% block script %}{{ url_for('static', filename='js/create.js') }}{% endblock %}
+
+{% block body %}
+
+<div class="position-absolute top-50 start-50 translate-middle">
+    <h1>Create Quiz</h1>
+
+    <div id="btn-box">
+        <button class="position-absolute start-0 btn btn-light" id="BtnLast" style="display:none;" onclick="lastCard()"><< last</button>
+        <button class="position-absolute end-0 btn btn-light" id="BtnNext" onclick="nextCard()">next >></button>
+    </div>
+
+    <form method="post" id="form" style="width:30vw;">
+        <div id="1" >
+            <label>Quiz title:
+                <input type="text" name="title" placeholder="Type Quiz title here" required maxlength="64">
+            </label>
+            <label>Question 1:
+                <input type="text" name="question_1" placeholder="Type question here" required maxlength="128">
+            </label>
+            <label>Correct answer:
+                <input type="text" name="correct_1" placeholder="Type correct answer here" required maxlength="64">
+            </label>
+            <label>Incorrect answer:
+                <input type="text" name="option1_1" placeholder="Type incorrect answer here" required maxlength="64">
+            </label>
+            <label>Incorrect answer:
+                <input type="text" name="option2_1" placeholder="Type incorrect answer here" maxlength="64">
+            </label>
+            <label>Incorrect answer:
+                <input type="text" name="option3_1" placeholder="Type incorrect answer here" maxlength="64">
+            </label>
+        </div>
+        <br>
+        <button id="BUTTON" class="btn btn-light" style="width:100%">Submit Quiz</button>
+
+    </form>
+    </div>
+{% endblock %}

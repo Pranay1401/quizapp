@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Leaderboard - QuizApp{% endblock %}
+{% block style %}{{ url_for('static', filename='css/results.css') }}{% endblock %}
+
+{% block body %}
+
+<div class="container">
+	<header>
+<h1 style="color:#58afd1;">Leaderboard</h1>
+	</header>
+	<div class="wrapper">
+		<table>
+			<thead>
+				<tr>
+					<th>Rank</th>
+					<th>User</th>
+					<th>Score</th>
+					<th>Time</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for i in range(quiz|length) %}
+					<tr>
+						<td class="rank">{{i+1}}</td>
+						<td class="team">{{quiz[i].username}}</td>
+						<td class="points">{{quiz[i].score}}</td>
+						<td class="up-down">{{quiz[i].time}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+{% endblock %}

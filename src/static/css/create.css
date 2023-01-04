@@ -1,0 +1,19 @@
+h1 {
+    margin-bottom: 3rem;
+    color: #326295;
+    text-align: center;
+}
+
+label {
+    color: #FFF;
+    padding-top: 1rem;
+}
+
+form div label,
+form div input {
+    width: 100%;
+}
+
+#btn-box {
+    padding: 1rem 1rem 2rem;
+}

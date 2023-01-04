@@ -1,0 +1,33 @@
+body {
+    color: white;
+}
+
+h1 {
+    color: #326295;
+    text-align: center;
+    font-weight: 600;
+    font-size: 3em;
+    margin: 3rem 0;
+}
+
+.container {
+    width: 33%;
+    min-width: 400px;
+}
+
+@media only screen and (max-width: 400px) {
+    .container {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+input{
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+#submit {
+    width: 100%;
+    margin-top: 1rem;
+}

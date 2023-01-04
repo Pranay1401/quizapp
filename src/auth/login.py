@@ -1,12 +1,11 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from flask_login import login_user, login_required, logout_user, current_user
-from auth import account
-from models import User
-from __init__ import db
+from flask import render_template, request, redirect, url_for
+from flask_login import login_user, login_required, logout_user
+from . import account as blueprint_account
+from ..models import User
 
 
 # login page
-@account.route('/login/', methods=['GET', 'POST'])
+@blueprint_account.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
         username = request.form.get('username')
@@ -20,14 +19,15 @@ def login():
             if user.check_password(password):
                 login_user(user, remember=True)
                 return redirect(url_for('quiz.all_quiz'))
-            else: return redirect(url_for('account.login'))
+            else:
+                return redirect(url_for('account.login'))
 
     return render_template("login.html")
 
 
 # login page
 @login_required
-@account.route('/logout/', methods=['GET', 'POST'])
+@blueprint_account.route('/logout/', methods=['GET', 'POST'])
 def logout():
     logout_user()
     return redirect(url_for('quiz.all_quiz'))

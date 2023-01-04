@@ -86,9 +86,6 @@ python app.py
 - You can generate docker image using command `docker image build -t quizapp .` in content root directory (`projects/quizapp`).
 - You can start docker container with command `docker run -d -p PORT:80 quizapp`, fill PORT with the port you want the app run.
 
-
-
-
 ## Contribute?
 Want to contribute? Awesome!  
 This project was part of weekly challenges hosted by [DevJam] and won't be updated.
