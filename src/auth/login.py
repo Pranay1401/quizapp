@@ -5,7 +5,7 @@ from ..models import User
 
 
 # login page
-@blueprint_account.route('/login/', methods=['GET', 'POST'])
+@blueprint_account.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
         username = request.form.get('username')
@@ -27,7 +27,7 @@ def login():
 
 # login page
 @login_required
-@blueprint_account.route('/logout/', methods=['GET', 'POST'])
+@blueprint_account.route('/logout', methods=['GET', 'POST'])
 def logout():
     logout_user()
     return redirect(url_for('quiz.all_quiz'))
