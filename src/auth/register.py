@@ -5,7 +5,7 @@ from ..models import db, User
 
 
 # Register page
-@blueprint_account.route('/register/', methods=['GET', 'POST'])
+@blueprint_account.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
         username = request.form.get('username')

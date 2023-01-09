@@ -6,7 +6,7 @@ from . import quiz as blueprint_quiz
 
 
 # play page
-@blueprint_quiz.route('/play/<quiz_id>/', methods=['GET', 'POST'])
+@blueprint_quiz.route('/play/<quiz_id>', methods=['GET', 'POST'])
 def play(quiz_id):
     if current_user.is_authenticated:
         user_id = current_user.id
@@ -51,7 +51,7 @@ def play(quiz_id):
 
 
 # play page
-@blueprint_quiz.route('/play/', methods=['GET'])
+@blueprint_quiz.route('/play', methods=['GET'])
 def all_quiz():
     all_quizs = Quiz.query.all()
     total_takes = []

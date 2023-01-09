@@ -5,7 +5,7 @@ from . import quiz as blueprint_quiz
 
 
 # login page
-@blueprint_quiz.route('/create/', methods=['GET', 'POST'])
+@blueprint_quiz.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == "POST":
         if current_user.is_authenticated:
