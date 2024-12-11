@@ -1,9 +1,9 @@
-# Quiz web app
+# QuickQuizz web app
 Where you can create your own quizzes, play in numerous of quizzes and compare your statistics with others in the Leaderboard of each challenge.
 
 
 ## Purpose
-This project was made as part of the weekly programming challenge hosted by [DevJam].
+This project was made as part of our final python project.
 The project was made for learning purposes.
 ### What I learned
 Once again I learned lots of new things. For the first time I used Bootstrap. I also learned how to order database query in sqlalchemy.
@@ -16,10 +16,7 @@ Leaderboard page
 
 
 
-## About the Challenge
-#### 🛠 Difficulty Level (of user stories): Beginner 
-📅 Start: December 10th<br>
-📅 Deadline: December 16th 16:00 (4PM) GMT
+
 
 #### 📝 Project Description
 Practice and test your knowledge by answering questions in a quiz application.
